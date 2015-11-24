@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<drawAvatars01:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:drawAvatars01="clr-namespace:DrawAvatars01;assembly=DrawAvatars01"
              x:Class="DrawAvatars01.ImageButtonPage">
   <StackLayout>
     <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
   </StackLayout>
-</ContentPage>
+</drawAvatars01:BaseContentPage>
