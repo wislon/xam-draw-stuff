@@ -8,9 +8,10 @@ namespace DrawAvatars01.ViewModels
     public class BaseViewModel : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        
         private readonly Dictionary<string, object> _values = new Dictionary<string, object>();
 
-        public void ResetProperties()
+        public void ClearProperties()
         {
             _values.Clear();
         }
@@ -47,7 +48,7 @@ namespace DrawAvatars01.ViewModels
 
         public virtual void Dispose()
         {
-            ResetProperties();
+            ClearProperties();
         }
     }
 }
