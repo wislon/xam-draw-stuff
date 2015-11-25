@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-
+using DrawAvatars01.iOS.Platform;
 using Foundation;
 using NControl.iOS;
+using Splat;
 using UIKit;
+using XLabs.Forms.Controls;
 
 namespace DrawAvatars01.iOS
 {
@@ -26,9 +26,14 @@ namespace DrawAvatars01.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
-            NControlViewRenderer.Init();
-
             string dataPath = GetAppDataFolder();
+
+            Locator.CurrentMutable.RegisterConstant(new IOSLogger(), typeof(ILogger));
+
+            NControlViewRenderer.Init();
+            DummyImageButtonRenderer.Initialise();
+
+
             LoadApplication(new App(dataPath));
 
             return base.FinishedLaunching(app, options);
