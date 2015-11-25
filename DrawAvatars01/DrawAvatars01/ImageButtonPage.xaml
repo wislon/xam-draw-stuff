@@ -2,8 +2,41 @@
 <drawAvatars01:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:drawAvatars01="clr-namespace:DrawAvatars01;assembly=DrawAvatars01"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              x:Class="DrawAvatars01.ImageButtonPage">
-  <StackLayout>
+  
+  <StackLayout x:Name="containerLayout" Orientation="Vertical" Spacing="16" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
     <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
+    
+    <Button x:Name="btnTest" Text="Hi there!" BorderColor="Blue" BorderRadius="4" BorderWidth="2">
+      <Button.Image>
+        <FileImageSource File="BigGreenButton" />
+      </Button.Image>
+    </Button>
+    
+    <drawAvatars01:DummyImageButton 
+                          HorizontalOptions="Center"
+                          HeightRequest="54" WidthRequest="200" 
+                          BorderRadius="27" 
+                          ImageHeightRequest="40" 
+                          ImageWidthRequest="40" 
+                          ImageTintColor="Lime" DisabledImageTintColor="Green"
+                          BackgroundColor="#01abdf" TextColor="#ffffff" 
+                          Source="AddButton" Orientation="ImageToLeft"
+                          Text="John Wilson"
+                          />
+    <controls:ImageButton 
+                          HorizontalOptions="Center"
+                          HeightRequest="54" WidthRequest="200"   
+                          BorderRadius="27" 
+                          ImageHeightRequest="40" 
+                          ImageWidthRequest="40" 
+                          ImageTintColor="Lime" DisabledImageTintColor="Green"
+                          BackgroundColor="#01abdf" TextColor="#ffffff" 
+                          Source="AddButton" Orientation="ImageToLeft"
+                          Text="John Wilson"
+                          />
+    <!--WidthRequest="175"-->
   </StackLayout>
+  
 </drawAvatars01:BaseContentPage>
