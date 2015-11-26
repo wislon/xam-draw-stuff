@@ -1,7 +1,6 @@
 ﻿
 using DrawAvatars01.ViewModels;
 using Xamarin.Forms;
-using XLabs.Enums;
 
 namespace DrawAvatars01
 {
