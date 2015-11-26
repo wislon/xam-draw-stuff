@@ -14,7 +14,7 @@
       </Button.Image>
     </Button>
     
-    <drawAvatars01:DummyImageButton 
+    <drawAvatars01:AvatarWithNameButton 
                           HorizontalOptions="Center"
                           HeightRequest="54" WidthRequest="200" 
                           BorderRadius="27" 
@@ -36,6 +36,24 @@
                           Source="AddButton" Orientation="ImageToLeft"
                           Text="John Wilson"
                           />
+    <controls:ImageButton 
+                          HorizontalOptions="CenterAndExpand"
+                          HeightRequest="54" 
+                          BorderRadius="27" 
+                          BorderWidth="2"
+                          BorderColor="Fuschia"
+                          ImageHeightRequest="46" 
+                          ImageWidthRequest="46" 
+                          BackgroundColor="Silver" TextColor="#f0f0f0"
+                          Orientation="ImageToLeft"
+                          Text="John Wilson">
+                          <controls:ImageButton.Source>
+                            <UriImageSource CacheValidity="1" 
+                                            CachingEnabled="True" 
+                                            Uri="https://d2ojpxxtu63wzl.cloudfront.net/static/2bacd1af951486806f4f0c452c5549aa_9b5a49c8032bb699fd25f9d8ba090b26aa519e27ab686e66aa51457444be2699" />
+                          </controls:ImageButton.Source>
+      </controls:ImageButton>
+
     <!--WidthRequest="175"-->
   </StackLayout>
   
