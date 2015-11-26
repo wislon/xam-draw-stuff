@@ -40,6 +40,7 @@
     <controls:ImageButton
                           HorizontalOptions="CenterAndExpand"
                           HeightRequest="54"
+                          WidthRequest="200"
                           BorderRadius="27"
                           BorderWidth="2"
                           BorderColor="Fuschia"
@@ -57,6 +58,7 @@
     <drawAvatars01:AvatarWithNameButton
               HorizontalOptions="CenterAndExpand"
               HeightRequest="54"
+              WidthRequest="200"
               BorderRadius="27"
               BorderWidth="2"
               BorderColor="Fuschia"

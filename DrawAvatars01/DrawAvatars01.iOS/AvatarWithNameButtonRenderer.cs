@@ -27,7 +27,7 @@ namespace DrawAvatars01.iOS
         /// Identifies the iPad.
         /// 
         /// </summary>
-        private const string IPAD = IPAD;
+        private const string IPAD = "iPad";
 
         /// <summary>
         /// Gets the underlying element typed as an <see cref="P:XLabs.Forms.Controls.AvatarWithNameButtonRenderer.AvatarWithNameButton"/>.
@@ -295,18 +295,54 @@ namespace DrawAvatars01.iOS
                 var uiImage2 = uiImage1;
                 if(heightRequest > 0 && widthRequest > 0 && (uiImage1.Size.Height != heightRequest || uiImage1.Size.Width != widthRequest))
                 {
+                    // squish it so it fits within the size you requested.
                     uiImage2 = uiImage2.Scale(new CGSize(widthRequest, heightRequest));
                 }
+
+                var width = uiImage2.CGImage.Width;
+                var uiImage3 = ClipToCircle(uiImage2, width, (float)width / 2);
+
                 if(tintColor != null)
                 {
                     targetButton.TintColor = tintColor;
-                    targetButton.SetImage(uiImage2.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), state);
+                    targetButton.SetImage(uiImage3.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), state);
                 }
                 else
                 {
-                    targetButton.SetImage(uiImage2.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), state);
+                    targetButton.SetImage(uiImage3.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), state);
                 }
             }
+        }
+
+        /// <summary>
+        /// See http://stackoverflow.com/a/8975222/1135847 (and the one above it
+        /// for rectangular images)
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="width"></param>
+        /// <param name="radius">Note that if you make the radius bigger than half the width of the image, you just end up with rounded corners</param>
+        /// <returns></returns>
+        private static UIImage ClipToCircle(UIImage image, float width, float radius)
+        {
+            UIGraphics.BeginImageContext(new CGSize(width, width));
+            var c = UIGraphics.GetCurrentContext();
+
+            //Note: You need to write the Device.IsRetina code yourself 
+            // radius = Device.IsRetina ? radius * 2 : radius;
+
+            c.BeginPath();
+            c.MoveTo(width, width / 2);
+            c.AddArcToPoint(width, width, width / 2, width, radius);
+            c.AddArcToPoint(0, width, 0, width / 2, radius);
+            c.AddArcToPoint(0, 0, width / 2, 0, radius);
+            c.AddArcToPoint(width, 0, width, width / 2, radius);
+            c.ClosePath();
+            c.Clip();
+
+            image.Draw(new CGPoint(0, 0));
+            var converted = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
+            return converted;
         }
 
         public override void LayoutSubviews()
