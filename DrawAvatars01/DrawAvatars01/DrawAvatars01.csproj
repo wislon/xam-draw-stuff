@@ -36,7 +36,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="BaseContentPage.cs" />
-    <Compile Include="DummyImageButton.cs" />
+    <Compile Include="AvatarWithNameButton.cs" />
     <Compile Include="ImageButtonPage.xaml.cs">
       <DependentUpon>ImageButtonPage.xaml</DependentUpon>
     </Compile>
