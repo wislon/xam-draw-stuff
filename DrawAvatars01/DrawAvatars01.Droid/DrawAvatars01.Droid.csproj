@@ -156,6 +156,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ForceXLabsLinkerButtonRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Platform\AndroidLogger.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

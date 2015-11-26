@@ -25,7 +25,7 @@ namespace DrawAvatars01.Droid
             string dataPath = GetAppDataFolder();
 
             NControlViewRenderer.Init();
-            DummyImageButtonRenderer.Initialise();
+            ForceXLabsLinkerButtonRenderer.Initialise();
 
             Locator.CurrentMutable.RegisterConstant(new AndroidLogger(), typeof(ILogger));
 
@@ -44,12 +44,5 @@ namespace DrawAvatars01.Droid
 
     }
 
-    public class DummyImageButtonRenderer : ImageButtonRenderer
-    {
-        public static void Initialise()
-        {
-            LogHost.Default.Debug("DummyImageButtonRenderer initialised");
-        }
-    }
 }
 
