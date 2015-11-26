@@ -97,15 +97,15 @@ namespace DrawAvatars01.iOS
         protected override async void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);
-            var imageButton = AvatarWithNameButton;
+            var avatarWithNameButton = AvatarWithNameButton;
             var targetButton = Control;
-            if(imageButton != null && targetButton != null && imageButton.Source != null)
+            if(avatarWithNameButton != null && targetButton != null && avatarWithNameButton.Source != null)
             {
                 targetButton.LineBreakMode = UILineBreakMode.WordWrap;
-                var width = GetWidth(imageButton.ImageWidthRequest);
-                var height = GetHeight(imageButton.ImageHeightRequest);
-                await SetupImages(imageButton, targetButton, width, height);
-                switch(imageButton.Orientation)
+                var width = GetWidth(avatarWithNameButton.ImageWidthRequest);
+                var height = GetHeight(avatarWithNameButton.ImageHeightRequest);
+                await SetupImages(avatarWithNameButton, targetButton, width, height);
+                switch(avatarWithNameButton.Orientation)
                 {
                     case ImageOrientation.ImageToLeft:
                     {
@@ -114,17 +114,17 @@ namespace DrawAvatars01.iOS
                     }
                     case ImageOrientation.ImageOnTop:
                     {
-                        AlignToTop(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
+                        AlignToTop(avatarWithNameButton.ImageHeightRequest, avatarWithNameButton.ImageWidthRequest, targetButton);
                         break;
                     }
                     case ImageOrientation.ImageToRight:
                     {
-                        AlignToRight(imageButton.ImageWidthRequest, targetButton);
+                        AlignToRight(avatarWithNameButton.ImageWidthRequest, targetButton);
                         break;
                     }
                     case ImageOrientation.ImageOnBottom:
                     {
-                        AlignToBottom(imageButton.ImageHeightRequest, imageButton.ImageWidthRequest, targetButton);
+                        AlignToBottom(avatarWithNameButton.ImageHeightRequest, avatarWithNameButton.ImageWidthRequest, targetButton);
                         break;
                     }
                 }

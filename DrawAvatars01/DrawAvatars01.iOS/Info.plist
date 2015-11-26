@@ -51,7 +51,6 @@
 
     <key>UIAppFonts</key>
     <array>
-      <string>fonts/Metric-Regular.otf</string>
     </array>
 
   </dict>
