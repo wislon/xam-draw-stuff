@@ -5,14 +5,14 @@
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              x:Class="DrawAvatars01.ImageButtonPage">
 
-  <StackLayout x:Name="containerLayout" Orientation="Vertical" Spacing="16" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+  <StackLayout x:Name="containerLayout" Orientation="Vertical" Padding="16" Spacing="16" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
     <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
 
-    <Button x:Name="btnTest" Text="Hi there!" BorderColor="Blue" BorderRadius="4" BorderWidth="2">
+    <!--<Button x:Name="btnTest" Text="Hi there!" BorderColor="Blue" BorderRadius="4" BorderWidth="2">
       <Button.Image>
         <FileImageSource File="BigGreenButton" />
       </Button.Image>
-    </Button>
+    </Button>-->
 
     <!--<drawAvatars01:AvatarWithNameButton
                           HorizontalOptions="Center"
@@ -57,23 +57,23 @@
     
     <drawAvatars01:AvatarWithNameButton
               HorizontalOptions="CenterAndExpand"
-              HeightRequest="54"
-              WidthRequest="200"
-              BorderRadius="27"
-              BorderWidth="2"
-              BorderColor="Fuschia"
-              ImageHeightRequest="46"
-              ImageWidthRequest="46"
-              BackgroundColor="Silver" TextColor="#f0f0f0"
+              HeightRequest="32"
+              BorderRadius="16"
+              BorderWidth="2" 
+              ImageHeightRequest="24"
+              ImageWidthRequest="24"
+              BorderColor="#e3e7ed"
+              BackgroundColor="#e3e7ed" 
+              TextColor="#2d2ba0"
+              FontSize="16"
               Orientation="ImageToLeft"
+              WidthRequest="132"
               Text="John Wilson">
       <drawAvatars01:AvatarWithNameButton.Source>
-        <UriImageSource CachingEnabled="False"
+        <UriImageSource CacheValidity="1" CachingEnabled="True"
                         Uri="https://d2ojpxxtu63wzl.cloudfront.net/static/2bacd1af951486806f4f0c452c5549aa_9b5a49c8032bb699fd25f9d8ba090b26aa519e27ab686e66aa51457444be2699" />
       </drawAvatars01:AvatarWithNameButton.Source>
     </drawAvatars01:AvatarWithNameButton>
-
-    <!--WidthRequest="175"-->
   </StackLayout>
 
 </drawAvatars01:BaseContentPage>
