@@ -182,34 +182,47 @@ namespace DrawAvatars01.iOS
 
         /// <summary>
         /// Properly aligns the title and image on a button to the left.
+        /// Image and text ('Title') insets (hardcoded to '4' and '12' for now) 
+        /// should actually be calculated  as a function of the height of the button, 
+        /// the height of the image, and the radius of the clipping circle around the image.
+        /// Spacing between image and text should be a bindable property
         /// </summary>
         /// <param name="targetButton">The button to align.</param>
         private static void AlignToLeft(UIButton targetButton)
         {
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Left;
-            var uiEdgeInsets = new UIEdgeInsets(0, 2, 0, -2f);
-            targetButton.TitleEdgeInsets = uiEdgeInsets;
+            var uiEdgeInsets1 = new UIEdgeInsets(0, 4, 0, -4f);
+            targetButton.ImageEdgeInsets = uiEdgeInsets1;
+            var uiEdgeInsets2 = new UIEdgeInsets(0, 12, 0, -12f);
+            targetButton.TitleEdgeInsets = uiEdgeInsets2;
         }
 
         /// <summary>
         /// Properly aligns the title and image on a button to the right.
-        /// 
+        /// Image and text ('Title') insets (hardcoded to '4' and '12' for now) 
+        /// should actually be calculated  as a function of the height of the button, 
+        /// the height of the image, and the radius of the clipping circle around the image.
+        /// Spacing between image and text should be a bindable property
         /// </summary>
-        /// <param name="widthRequest">The requested image width.</param><param name="targetButton">The button to align.</param>
+        /// <param name="widthRequest">The requested image width.</param>
+        /// <param name="targetButton">The button to align.</param>
         private static void AlignToRight(int widthRequest, UIButton targetButton)
         {
             targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Right;
             targetButton.TitleLabel.TextAlignment = UITextAlignment.Right;
-            var uiEdgeInsets1 = new UIEdgeInsets(0, 0, 0, widthRequest + 2);
+            var uiEdgeInsets1 = new UIEdgeInsets(0, 0, 0, widthRequest + 12);
             targetButton.TitleEdgeInsets = uiEdgeInsets1;
-            var uiEdgeInsets2 = new UIEdgeInsets(0, widthRequest, 0, -1 * widthRequest);
+            var uiEdgeInsets2 = new UIEdgeInsets(0, widthRequest - 4, 0, -1 * (widthRequest-4));
             targetButton.ImageEdgeInsets = uiEdgeInsets2;
         }
 
         /// <summary>
-        /// Properly aligns the title and image on a button when the image is over the title.
-        /// 
+        /// Properly aligns the title and image on a button when the image is above the title.
+        /// Image insets (hardcoded to '4' and '12' for now) should actually be calculated 
+        /// as a function of the height of the button, the height of the image, 
+        /// and the radius of the clipping circle around the image.
+        /// Spacing between image and text should be a bindable property
         /// </summary>
         /// <param name="heightRequest">The requested image height.</param>
         /// <param name="widthRequest">The requested image width.</param>
@@ -226,22 +239,24 @@ namespace DrawAvatars01.iOS
             UIEdgeInsets uiEdgeInsets2;
             if(UIDevice.CurrentDevice.Model.Contains(IPAD))
             {
-                uiEdgeInsets1 = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1 * widthRequest / 2),
-                                                 (-1 * heightRequest), Convert.ToInt32(widthRequest / 2));
-                uiEdgeInsets2 = new UIEdgeInsets(0, Convert.ToInt32(width / 2), 0, -1 * Convert.ToInt32(width / 2));
+                uiEdgeInsets1 = new UIEdgeInsets(heightRequest + 12, Convert.ToInt32(-1 * widthRequest / 2), (-1 * heightRequest), Convert.ToInt32(widthRequest / 2));
+                uiEdgeInsets2 = new UIEdgeInsets(4, Convert.ToInt32(width / 2), 0, -1 * Convert.ToInt32(width / 2));
             }
             else
             {
-                uiEdgeInsets1 = new UIEdgeInsets(heightRequest, Convert.ToInt32(-1 * widthRequest / 2),
-                                                 (-1 * heightRequest), Convert.ToInt32(widthRequest / 2));
-                uiEdgeInsets2 = new UIEdgeInsets(0, width / 2, 0, -1f * width / 2);
+                uiEdgeInsets1 = new UIEdgeInsets(heightRequest + 12, Convert.ToInt32(-1 * widthRequest / 2), (-1 * heightRequest), Convert.ToInt32(widthRequest / 2));
+                uiEdgeInsets2 = new UIEdgeInsets(4, width / 2, 0, -1f * width / 2);
             }
             targetButton.TitleEdgeInsets = uiEdgeInsets1;
             targetButton.ImageEdgeInsets = uiEdgeInsets2;
         }
 
         /// <summary>
-        /// Properly aligns the title and image on a button when the title is over the image.
+        /// Properly aligns the title and image on a button when the title is above the image.
+        /// Image and text ('Title') insets (hardcoded to '4' and '12' for now) 
+        /// should actually be calculated  as a function of the height of the button, 
+        /// the height of the image, and the radius of the clipping circle around the image.
+        /// Spacing between image and text should be a bindable property
         /// </summary>
         /// <param name="heightRequest">The requested image height.</param>
         /// <param name="widthRequest">The requested image width.</param>
@@ -265,8 +280,8 @@ namespace DrawAvatars01.iOS
             }
             else
             {
-                uiEdgeInsets1 = new UIEdgeInsets((-1 * heightRequest), -1 * widthRequest, heightRequest, widthRequest);
-                uiEdgeInsets2 = new UIEdgeInsets(0, 0, 0, 0);
+                uiEdgeInsets1 = new UIEdgeInsets((-1 * heightRequest), -1 * widthRequest, heightRequest - 12, widthRequest);
+                uiEdgeInsets2 = new UIEdgeInsets(0, 0, -4, 0);
             }
             targetButton.TitleEdgeInsets = uiEdgeInsets1;
             targetButton.ImageEdgeInsets = uiEdgeInsets2;
@@ -315,19 +330,20 @@ namespace DrawAvatars01.iOS
         }
 
         /// <summary>
-        /// See http://stackoverflow.com/a/8975222/1135847 (and the one above it
-        /// for rectangular images)
+        /// See http://stackoverflow.com/a/8975222/1135847 
+        /// (and the one above it for rectangular images)
         /// </summary>
         /// <param name="image"></param>
         /// <param name="width"></param>
-        /// <param name="radius">Note that if you make the radius bigger than half the width of the image, you just end up with rounded corners</param>
+        /// <param name="radius">Note that if you make the radius bigger than half 
+        /// the width of the image, you just end up with rounded corners</param>
         /// <returns></returns>
         private static UIImage ClipToCircle(UIImage image, float width, float radius)
         {
             UIGraphics.BeginImageContext(new CGSize(width, width));
             var c = UIGraphics.GetCurrentContext();
 
-            //Note: You need to write the Device.IsRetina code yourself 
+            //Note: You need to write the Device.IsRetina code yourself
             // radius = Device.IsRetina ? radius * 2 : radius;
 
             c.BeginPath();
