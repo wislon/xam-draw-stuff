@@ -31,7 +31,7 @@ namespace DrawAvatars01.iOS
             Locator.CurrentMutable.RegisterConstant(new IOSLogger(), typeof(ILogger));
 
             NControlViewRenderer.Init();
-            DummyImageButtonRenderer.Initialise();
+            AvatarWithNameButtonRenderer.Initialise();
 
 
             LoadApplication(new App(dataPath));
