@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ using XLabs.Enums;
 using Splat;
 using DrawAvatars01;
 using DrawAvatars01.iOS;
+using Color = Xamarin.Forms.Color;
 
 [assembly: ExportRenderer(typeof(AvatarWithNameButton), typeof(AvatarWithNameButtonRenderer))]
 namespace DrawAvatars01.iOS
@@ -373,6 +375,10 @@ namespace DrawAvatars01.iOS
                 Control.ImageEdgeInsets = new UIEdgeInsets(0, Control.Frame.Size.Width - 4 - AvatarWithNameButton.ImageWidthRequest, 0, Control.Frame.Size.Width - 4);
                 Control.TitleEdgeInsets = new UIEdgeInsets(0, 8, 0, Control.Frame.Size.Width - 4 - AvatarWithNameButton.ImageWidthRequest -8);
             }
+            var currentRect = Control.Frame;
+            var newWidth = currentRect.Width + 4.0f + 8.0f;
+            var resizedRect = new RectangleF((float)currentRect.Left, (float)currentRect.Top, (float)newWidth, (float)currentRect.Height);
+            Control.Frame = resizedRect;
         }
     }
 }
