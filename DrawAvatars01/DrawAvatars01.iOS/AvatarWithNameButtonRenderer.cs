@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +8,6 @@ using UIKit;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using XLabs.Enums;
 
 using Splat;
 using DrawAvatars01;
@@ -20,20 +18,13 @@ using Color = Xamarin.Forms.Color;
 namespace DrawAvatars01.iOS
 {
     /// <summary>
-    /// Draws a button on the iOS platform with the image shown in the correct
-    /// position with the correct size.
+    /// Draws a button on the iOS platform with the image to the left of the
+    /// text, with the image framed/clipped in a circle
     /// </summary>
     public class AvatarWithNameButtonRenderer : ButtonRenderer, IEnableLogger
     {
         /// <summary>
-        /// Identifies the iPad.
-        /// 
-        /// </summary>
-        private const string IPAD = "iPad";
-
-        /// <summary>
-        /// Gets the underlying element typed as an <see cref="P:XLabs.Forms.Controls.AvatarWithNameButtonRenderer.AvatarWithNameButton"/>.
-        /// 
+        /// Gets the underlying element typed as an <see cref="AvatarWithNameButton"/>.
         /// </summary>
         private AvatarWithNameButton AvatarWithNameButton
         {
@@ -50,8 +41,8 @@ namespace DrawAvatars01.iOS
         }
 
         /// <summary>
-        /// Returns the proper <see cref="T:Xamarin.Forms.Platform.iOS.IImageSourceHandler"/> based on the type of <see cref="T:Xamarin.Forms.ImageSource"/> provided.
-        /// 
+        /// Returns the proper <see cref="T:Xamarin.Forms.Platform.iOS.IImageSourceHandler"/> 
+        /// based on the type of <see cref="T:Xamarin.Forms.ImageSource"/> provided.
         /// </summary>
         /// <param name="source">The <see cref="T:Xamarin.Forms.ImageSource"/> to get the handler for.</param>
         /// <returns>
@@ -109,29 +100,7 @@ namespace DrawAvatars01.iOS
                 var width = GetWidth(avatarWithNameButton.ImageWidthRequest);
                 var height = GetHeight(avatarWithNameButton.ImageHeightRequest);
                 await SetupImages(avatarWithNameButton, targetButton, width, height);
-                switch (avatarWithNameButton.Orientation)
-                {
-                    case ImageOrientation.ImageToLeft:
-                        {
-                            AlignToLeft(targetButton);
-                            break;
-                        }
-                    case ImageOrientation.ImageOnTop:
-                        {
-                            AlignToTop(avatarWithNameButton.ImageHeightRequest, avatarWithNameButton.ImageWidthRequest, targetButton);
-                            break;
-                        }
-                    case ImageOrientation.ImageToRight:
-                        {
-                            AlignToRight(avatarWithNameButton.ImageWidthRequest, targetButton);
-                            break;
-                        }
-                    case ImageOrientation.ImageOnBottom:
-                        {
-                            AlignToBottom(avatarWithNameButton.ImageHeightRequest, avatarWithNameButton.ImageWidthRequest, targetButton);
-                            break;
-                        }
-                }
+                AlignToLeft(targetButton);
             }
         }
 
@@ -200,95 +169,6 @@ namespace DrawAvatars01.iOS
             targetButton.ImageEdgeInsets = uiEdgeInsets1;
             var uiEdgeInsets2 = new UIEdgeInsets(0, 12, 0, -12f);
             targetButton.TitleEdgeInsets = uiEdgeInsets2;
-        }
-
-        /// <summary>
-        /// Properly aligns the title and image on a button to the right.
-        /// Image and text ('Title') insets (hardcoded to '4' and '12' for now) 
-        /// should actually be calculated  as a function of the height of the button, 
-        /// the height of the image, and the radius of the clipping circle around the image.
-        /// Spacing between image and text should be a bindable property
-        /// </summary>
-        /// <param name="widthRequest">The requested image width.</param>
-        /// <param name="targetButton">The button to align.</param>
-        private static void AlignToRight(int widthRequest, UIButton targetButton)
-        {
-            targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Right;
-            targetButton.TitleLabel.TextAlignment = UITextAlignment.Right;
-            var uiEdgeInsets1 = new UIEdgeInsets(0, 0, 0, widthRequest + 12);
-            targetButton.TitleEdgeInsets = uiEdgeInsets1;
-            var uiEdgeInsets2 = new UIEdgeInsets(0, widthRequest - 4, 0, -1 * (widthRequest-4));
-            targetButton.ImageEdgeInsets = uiEdgeInsets2;
-        }
-
-        /// <summary>
-        /// Properly aligns the title and image on a button when the image is above the title.
-        /// Image insets (hardcoded to '4' and '12' for now) should actually be calculated 
-        /// as a function of the height of the button, the height of the image, 
-        /// and the radius of the clipping circle around the image.
-        /// Spacing between image and text should be a bindable property
-        /// </summary>
-        /// <param name="heightRequest">The requested image height.</param>
-        /// <param name="widthRequest">The requested image width.</param>
-        /// <param name="targetButton">The button to align.</param>
-        private static void AlignToTop(int heightRequest, int widthRequest, UIButton targetButton)
-        {
-            targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Top;
-            targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
-            targetButton.TitleLabel.TextAlignment = UITextAlignment.Center;
-            // ISSUE: reference to a compiler-generated method
-            targetButton.SizeToFit();
-            var width = targetButton.TitleLabel.IntrinsicContentSize.Width;
-            UIEdgeInsets uiEdgeInsets1;
-            UIEdgeInsets uiEdgeInsets2;
-            if(UIDevice.CurrentDevice.Model.Contains(IPAD))
-            {
-                uiEdgeInsets1 = new UIEdgeInsets(heightRequest + 12, Convert.ToInt32(-1 * widthRequest / 2), (-1 * heightRequest), Convert.ToInt32(widthRequest / 2));
-                uiEdgeInsets2 = new UIEdgeInsets(4, Convert.ToInt32(width / 2), 0, -1 * Convert.ToInt32(width / 2));
-            }
-            else
-            {
-                uiEdgeInsets1 = new UIEdgeInsets(heightRequest + 12, Convert.ToInt32(-1 * widthRequest / 2), (-1 * heightRequest), Convert.ToInt32(widthRequest / 2));
-                uiEdgeInsets2 = new UIEdgeInsets(4, width / 2, 0, -1f * width / 2);
-            }
-            targetButton.TitleEdgeInsets = uiEdgeInsets1;
-            targetButton.ImageEdgeInsets = uiEdgeInsets2;
-        }
-
-        /// <summary>
-        /// Properly aligns the title and image on a button when the title is above the image.
-        /// Image and text ('Title') insets (hardcoded to '4' and '12' for now) 
-        /// should actually be calculated  as a function of the height of the button, 
-        /// the height of the image, and the radius of the clipping circle around the image.
-        /// Spacing between image and text should be a bindable property
-        /// </summary>
-        /// <param name="heightRequest">The requested image height.</param>
-        /// <param name="widthRequest">The requested image width.</param>
-        /// <param name="targetButton">The button to align.</param>
-        private static void AlignToBottom(int heightRequest, int widthRequest, UIButton targetButton)
-        {
-            targetButton.VerticalAlignment = UIControlContentVerticalAlignment.Bottom;
-            targetButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
-            targetButton.TitleLabel.TextAlignment = UITextAlignment.Center;
-            // ISSUE: reference to a compiler-generated method
-            targetButton.SizeToFit();
-            var width = targetButton.TitleLabel.IntrinsicContentSize.Width;
-            UIEdgeInsets uiEdgeInsets1;
-            UIEdgeInsets uiEdgeInsets2;
-            if(UIDevice.CurrentDevice.Model.Contains(IPAD))
-            {
-                uiEdgeInsets1 = new UIEdgeInsets((-1 * heightRequest),
-                                                 Convert.ToInt32(-1 * widthRequest / 2), heightRequest,
-                                                 Convert.ToInt32(widthRequest / 2));
-                uiEdgeInsets2 = new UIEdgeInsets(0, width / 2, 0, -1f * width / 2);
-            }
-            else
-            {
-                uiEdgeInsets1 = new UIEdgeInsets((-1 * heightRequest), -1 * widthRequest, heightRequest - 12, widthRequest);
-                uiEdgeInsets2 = new UIEdgeInsets(0, 0, -4, 0);
-            }
-            targetButton.TitleEdgeInsets = uiEdgeInsets1;
-            targetButton.ImageEdgeInsets = uiEdgeInsets2;
         }
 
         /// <summary>
@@ -369,12 +249,6 @@ namespace DrawAvatars01.iOS
         {
             base.LayoutSubviews();
 
-            // TODO this is broken somehow, image looks centred but stretched horizontally and text is a single vertical line of letters.
-            if (AvatarWithNameButton.Orientation == ImageOrientation.ImageToRight)
-            {
-                Control.ImageEdgeInsets = new UIEdgeInsets(0, Control.Frame.Size.Width - 4 - AvatarWithNameButton.ImageWidthRequest, 0, Control.Frame.Size.Width - 4);
-                Control.TitleEdgeInsets = new UIEdgeInsets(0, 8, 0, Control.Frame.Size.Width - 4 - AvatarWithNameButton.ImageWidthRequest -8);
-            }
             var currentRect = Control.Frame;
             var newWidth = currentRect.Width + 4.0f + 8.0f;
             var resizedRect = new RectangleF((float)currentRect.Left, (float)currentRect.Top, (float)newWidth, (float)currentRect.Height);

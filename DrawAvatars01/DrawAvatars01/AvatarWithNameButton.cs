@@ -46,14 +46,6 @@ namespace DrawAvatars01
                                     (BindableProperty.CreateDefaultValueDelegate<AvatarWithNameButton, int>)null);
 
         /// <summary>
-        /// Backing field for the orientation property.
-        /// </summary>
-        public static readonly BindableProperty OrientationProperty =
-            BindableProperty.Create(p => p.Orientation, ImageOrientation.ImageToLeft, BindingMode.OneWay,
-                null, null, null, null, 
-                (BindableProperty.CreateDefaultValueDelegate<AvatarWithNameButton, ImageOrientation>)null);
-
-        /// <summary>
         /// Backing field for the tint color property.
         /// </summary>
         public static readonly BindableProperty ImageTintColorProperty =
@@ -96,18 +88,6 @@ namespace DrawAvatars01
         {
             get { return (ImageSource)GetValue(DisabledSourceProperty); }
             set { SetValue(DisabledSourceProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets The orientation of the image relative to the text.
-        /// </summary>
-        /// <value>
-        /// The Orientation property gets/sets the value of the backing field, OrientationProperty.
-        /// </value>
-        public ImageOrientation Orientation
-        {
-            get { return (ImageOrientation)GetValue(OrientationProperty); }
-            set { SetValue(OrientationProperty, value); }
         }
 
         /// <summary>
