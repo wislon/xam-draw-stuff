@@ -249,6 +249,8 @@ namespace DrawAvatars01.iOS
         {
             base.LayoutSubviews();
 
+            // make the button just a bit wider to cater for the additional insets (or there's no padding at the end 
+            // of the button, and the text sometimes overflows off the end if it's a larger font)
             var currentRect = Control.Frame;
             var newWidth = currentRect.Width + 4.0f + 8.0f;
             var resizedRect = new RectangleF((float)currentRect.Left, (float)currentRect.Top, (float)newWidth, (float)currentRect.Height);
