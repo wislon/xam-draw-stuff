@@ -37,7 +37,11 @@ namespace DrawAvatars01.iOS
         {
             get { return (AvatarWithNameButton)Element; }
         }
-
+        
+        /// <summary>
+        /// remember to call this from your appdelegate to make sure the linker
+        /// doesn't compile it out of the build if it thinks there's no references to it.
+        /// </summary>
         public static void Initialise()
         {
             LogHost.Default.Debug("AvatarWithNameButtonRenderer Initialised");
@@ -55,17 +59,16 @@ namespace DrawAvatars01.iOS
         {
             var imageSourceHandler = (IImageSourceHandler)null;
             if(source is UriImageSource)
-                imageSourceHandler = (IImageSourceHandler)new ImageLoaderSourceHandler();
+                imageSourceHandler = new ImageLoaderSourceHandler();
             else if(source is FileImageSource)
-                imageSourceHandler = (IImageSourceHandler)new FileImageSourceHandler();
+                imageSourceHandler = new FileImageSourceHandler();
             else if(source is StreamImageSource)
-                imageSourceHandler = (IImageSourceHandler)new StreamImagesourceHandler();
+                imageSourceHandler = new StreamImagesourceHandler();
             return imageSourceHandler;
         }
 
         /// <summary>
-        /// Gets the width based on the requested width, if request less than 0, returns 50.
-        /// 
+        /// Gets the width based on the requested width, if request less than 0, returns 40.
         /// </summary>
         /// <param name="requestedWidth">The requested width.</param>
         /// <returns>
@@ -73,12 +76,11 @@ namespace DrawAvatars01.iOS
         /// </returns>
         private int GetWidth(int requestedWidth)
         {
-            return requestedWidth > 0 ? requestedWidth : 50;
+            return requestedWidth > 0 ? requestedWidth : 40;
         }
 
         /// <summary>
-        /// Gets the height based on the requested height, if request less than 0, returns 50.
-        /// 
+        /// Gets the height based on the requested height, if request less than 0, returns 40.
         /// </summary>
         /// <param name="requestedHeight">The requested height.</param>
         /// <returns>
@@ -86,7 +88,7 @@ namespace DrawAvatars01.iOS
         /// </returns>
         private int GetHeight(int requestedHeight)
         {
-            return requestedHeight > 0 ? requestedHeight : 50;
+            return requestedHeight > 0 ? requestedHeight : 40;
         }
 
         /// <summary>
@@ -105,28 +107,28 @@ namespace DrawAvatars01.iOS
                 var width = GetWidth(avatarWithNameButton.ImageWidthRequest);
                 var height = GetHeight(avatarWithNameButton.ImageHeightRequest);
                 await SetupImages(avatarWithNameButton, targetButton, width, height);
-                switch(avatarWithNameButton.Orientation)
+                switch (avatarWithNameButton.Orientation)
                 {
                     case ImageOrientation.ImageToLeft:
-                    {
-                        AlignToLeft(targetButton);
-                        break;
-                    }
+                        {
+                            AlignToLeft(targetButton);
+                            break;
+                        }
                     case ImageOrientation.ImageOnTop:
-                    {
-                        AlignToTop(avatarWithNameButton.ImageHeightRequest, avatarWithNameButton.ImageWidthRequest, targetButton);
-                        break;
-                    }
+                        {
+                            AlignToTop(avatarWithNameButton.ImageHeightRequest, avatarWithNameButton.ImageWidthRequest, targetButton);
+                            break;
+                        }
                     case ImageOrientation.ImageToRight:
-                    {
-                        AlignToRight(avatarWithNameButton.ImageWidthRequest, targetButton);
-                        break;
-                    }
+                        {
+                            AlignToRight(avatarWithNameButton.ImageWidthRequest, targetButton);
+                            break;
+                        }
                     case ImageOrientation.ImageOnBottom:
-                    {
-                        AlignToBottom(avatarWithNameButton.ImageHeightRequest, avatarWithNameButton.ImageWidthRequest, targetButton);
-                        break;
-                    }
+                        {
+                            AlignToBottom(avatarWithNameButton.ImageHeightRequest, avatarWithNameButton.ImageWidthRequest, targetButton);
+                            break;
+                        }
                 }
             }
         }
@@ -162,11 +164,11 @@ namespace DrawAvatars01.iOS
         private async Task SetupImages(AvatarWithNameButton imageButton, UIButton targetButton, int width, int height)
         {
             var tintColor = imageButton.ImageTintColor == Color.Transparent
-                ? (UIColor)null
+                ? null
                 : imageButton.ImageTintColor.ToUIColor();
 
             var disabledTintColor = imageButton.DisabledImageTintColor == Color.Transparent
-                ? (UIColor)null
+                ? null
                 : imageButton.DisabledImageTintColor.ToUIColor();
 
             await SetImageAsync(imageButton.Source, width, height, targetButton,
@@ -364,8 +366,13 @@ namespace DrawAvatars01.iOS
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
-            if(AvatarWithNameButton.Orientation != ImageOrientation.ImageToRight) { return; }
-            Control.ImageEdgeInsets = new UIEdgeInsets(0, Control.Frame.Size.Width - 2 - AvatarWithNameButton.ImageWidthRequest, 0, 0);
+
+            // TODO this is broken somehow, image looks centred but stretched horizontally and text is a single vertical line of letters.
+            if (AvatarWithNameButton.Orientation == ImageOrientation.ImageToRight)
+            {
+                Control.ImageEdgeInsets = new UIEdgeInsets(0, Control.Frame.Size.Width - 4 - AvatarWithNameButton.ImageWidthRequest, 0, Control.Frame.Size.Width - 4);
+                Control.TitleEdgeInsets = new UIEdgeInsets(0, 8, 0, Control.Frame.Size.Width - 4 - AvatarWithNameButton.ImageWidthRequest -8);
+            }
         }
     }
 }
